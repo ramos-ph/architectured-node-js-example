@@ -22,8 +22,8 @@ class CreateProfile {
     // await sendWelcomeMail?
     await this._emailQueue.add("welcome_mail", {
       to: email,
-      subject: "danese",
-      text: "bolas",
+      subject: "Welcome to our platform!",
+      text: "Your account was created!",
     });
 
     return profile;
