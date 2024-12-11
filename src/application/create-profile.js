@@ -1,8 +1,9 @@
 import { Profile } from "../domain/profile.js";
 
 class CreateProfile {
-  constructor({ profileRepository }) {
+  constructor({ profileRepository, emailQueue }) {
     this._profileRepository = profileRepository;
+    this._emailQueue = emailQueue;
   }
 
   async execute({ email, username, password }) {
@@ -18,7 +19,12 @@ class CreateProfile {
 
     await this._profileRepository.create(profile);
 
-    // schedule email
+    // await sendWelcomeMail?
+    await this._emailQueue.add("welcome_mail", {
+      to: email,
+      subject: "danese",
+      text: "bolas",
+    });
 
     return profile;
   }
