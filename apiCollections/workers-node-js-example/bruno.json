@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "workers-node-js-example",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

@@ -1,0 +1,19 @@
+meta {
+  name: Create Profile
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/api/profiles
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "jdoe",
+    "email": "john.doe@gmail.com",
+    "password": "123456"
+  }
+}
