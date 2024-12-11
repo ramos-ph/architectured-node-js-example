@@ -8,7 +8,13 @@
 $ npm install
 ```
 
-3. Start the server with
+3. Start the Redis server
+
+```
+$ docker compose up -d
+```
+
+4. Start the server with
 
 ```
 $ npm start
