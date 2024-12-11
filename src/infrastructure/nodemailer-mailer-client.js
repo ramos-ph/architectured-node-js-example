@@ -15,7 +15,7 @@ class NodemailerMailerClient {
 
   async sendMail(mail) {
     this._transporter.sendMail({
-      from: "tigrinho@mail.com",
+      from: "no-reply@example.com",
       ...mail,
     });
   }
