@@ -1,6 +1,6 @@
 import { Queue } from "bullmq";
 
-class BullMQQueueManager {
+class BullMQQueueService {
   constructor({ connection }) {
     this._connection = connection;
     this._queues = new Map();
@@ -20,4 +20,4 @@ class BullMQQueueManager {
   }
 }
 
-export { BullMQQueueManager };
+export { BullMQQueueService };

@@ -1,12 +1,12 @@
 class EmailQueue {
   _QUEUE_NAME = "email";
 
-  constructor({ queueManager }) {
-    this._queueManager = queueManager;
+  constructor({ queueService }) {
+    this._queueService = queueService;
   }
 
   async add(name, job) {
-    await this._queueManager.add(this._QUEUE_NAME, name, job);
+    await this._queueService.add(this._QUEUE_NAME, name, job);
   }
 }
 
