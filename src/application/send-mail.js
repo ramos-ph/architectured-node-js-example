@@ -1,10 +1,10 @@
 class SendMail {
-  constructor({ mailerClient }) {
-    this._mailerClient = mailerClient;
+  constructor({ mailerService }) {
+    this._mailerService = mailerService;
   }
 
   async execute(mail) {
-    await this._mailerClient.sendMail(mail);
+    await this._mailerService.sendMail(mail);
   }
 }
 

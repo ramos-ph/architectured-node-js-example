@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-class NodemailerMailerClient {
+class NodemailerMailerService {
   constructor() {
     this._transporter = nodemailer.createTransport({
       host: "smtp.ethereal.email",
@@ -21,4 +21,4 @@ class NodemailerMailerClient {
   }
 }
 
-export { NodemailerMailerClient };
+export { NodemailerMailerService };
