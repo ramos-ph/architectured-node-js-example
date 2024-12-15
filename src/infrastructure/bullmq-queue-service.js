@@ -30,6 +30,10 @@ class BullMQQueueService {
       console.error(`[WORKERS] Job failed: ${job.message}`);
     });
 
+    worker.on("failed", (job) => {
+      console.error(`[WORKERS] Job failed: ${JSON.stringify(job)}`);
+    });
+
     worker.on("completed", (job) => {
       console.log(`[WORKERS] Job ${job.id} completed.`);
     });
