@@ -20,7 +20,7 @@ $ docker compose up -d
 $ cp .env.example .env
 ```
 
-Get the mail credentials at https://ethereal.email/
+Get the mail credentials at https://ethereal.email/.
 
 5. Start the server with
 
@@ -31,3 +31,5 @@ $ npm start
 The server will be started at `http://localhost:3000`.
 
 Together with the project there is a Bruno collection that you can use to make requests.
+
+If you want to monitor the queues, refer to http://localhost:3000/admin/queues.
