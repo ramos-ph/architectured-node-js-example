@@ -4,7 +4,6 @@ import { PBKDF2PasswordHasher } from "./infrastructure/pbkdf2-password-hasher.js
 import { NodemailerMailerService } from "./infrastructure/nodemailer-mailer-client.js";
 import { SendMail } from "./application/send-mail.js";
 import { BullMQQueueService } from "./infrastructure/bullmq-queue-service.js";
-import { EmailQueue } from "./infrastructure/email-queue.js";
 
 const bullMqQueueService = new BullMQQueueService({
   connection: { host: "localhost", port: 6379 },
@@ -13,8 +12,7 @@ const nodemailerMailerService = new NodemailerMailerService();
 const pbkdf2PasswordHasher = new PBKDF2PasswordHasher();
 const profileRepository = new ProfileRepositoryInMemory();
 
-const emailQueue = new EmailQueue({ queueManager: bullMqQueueService });
-const createProfile = new CreateProfile({ profileRepository, emailQueue });
+const createProfile = new CreateProfile({ profileRepository });
 const sendMail = new SendMail({ mailerClient: nodemailerMailerService });
 
 const container = {

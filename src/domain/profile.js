@@ -6,6 +6,10 @@ class Profile {
     this.passwordHash = data.passwordHash;
     this.salt = data.salt;
   }
+
+  static create(data) {
+    return new Profile(data);
+  }
 }
 
 export { Profile };

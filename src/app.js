@@ -27,12 +27,8 @@ class Application {
   }
 
   initializeWorkers() {
-    const worker = new Worker("email", EmailWorker.process, {
+    new Worker("email", EmailWorker.sendWelcomeMail, {
       connection: { host: "localhost", port: 6379 },
-    });
-
-    worker.on("completed", (job) => {
-      console.log(`[worker] Job ${job.id} completed.`);
     });
   }
 

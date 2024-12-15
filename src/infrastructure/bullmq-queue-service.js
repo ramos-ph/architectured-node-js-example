@@ -6,7 +6,7 @@ class BullMQQueueService {
     this._queues = new Map();
   }
 
-  async add(queueName, jobName, jobData) {
+  async addQueue(queueName, jobName, jobData) {
     const queue = this._getQueue(queueName);
     await queue.add(jobName, jobData);
   }
