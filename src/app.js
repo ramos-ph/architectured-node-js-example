@@ -9,12 +9,12 @@ import { EmailWorker } from "./interface/workers/email-worker.js";
 class Application {
   constructor() {
     this._app = express();
-    this.initializeMiddlewares();
-    this.initializeRoutes();
-    this.initializeWorkers();
+    this._initializeMiddlewares();
+    this._initializeRoutes();
+    this._initializeWorkers();
   }
 
-  initializeMiddlewares() {
+  _initializeMiddlewares() {
     this._app.use(express.json());
     this._app.use((req, _res, next) => {
       req.container = container;
@@ -22,11 +22,11 @@ class Application {
     });
   }
 
-  initializeRoutes() {
+  _initializeRoutes() {
     this._app.use("/api", Router.initialize());
   }
 
-  initializeWorkers() {
+  _initializeWorkers() {
     container.bullMqQueueService.addWorker(
       QUEUE_NAMES.SEND_MAIL,
       EmailWorker.sendWelcomeMail
