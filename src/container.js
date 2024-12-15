@@ -5,18 +5,18 @@ import { NodemailerMailerService } from "./infrastructure/nodemailer-mailer-clie
 import { SendMail } from "./application/send-mail.js";
 import { BullMQQueueService } from "./infrastructure/bullmq-queue-service.js";
 
-const bullMqQueueService = new BullMQQueueService({
+const queueService = new BullMQQueueService({
   connection: { host: "localhost", port: 6379 },
 });
 const nodemailerMailerService = new NodemailerMailerService();
 const pbkdf2PasswordHasher = new PBKDF2PasswordHasher();
 const profileRepository = new ProfileRepositoryInMemory();
 
-const createProfile = new CreateProfile({ profileRepository });
-const sendMail = new SendMail({ mailerClient: nodemailerMailerService });
+const createProfile = new CreateProfile({ profileRepository, queueService });
+const sendMail = new SendMail({ mailerService: nodemailerMailerService });
 
 const container = {
-  bullMqQueueService: bullMqQueueService,
+  queueService: queueService,
   profileRepository: profileRepository,
   createProfile: createProfile,
   pbkdf2PasswordHasher: pbkdf2PasswordHasher,
