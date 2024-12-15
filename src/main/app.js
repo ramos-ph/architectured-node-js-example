@@ -5,6 +5,7 @@ import { Router } from "../interface/http/router.js";
 import { container } from "../container.js";
 import { QUEUE_NAMES } from "../shared/constants.js";
 import { EmailWorker } from "../interface/workers/email-worker.js";
+import { BullBoard } from "./bull-board.js";
 
 class Application {
   constructor() {
@@ -12,6 +13,7 @@ class Application {
     this._initializeMiddlewares();
     this._initializeRoutes();
     this._initializeWorkers();
+    this._initializeBullBoard();
   }
 
   _initializeMiddlewares() {
@@ -31,6 +33,10 @@ class Application {
       QUEUE_NAMES.SEND_MAIL,
       EmailWorker.process
     );
+  }
+
+  _initializeBullBoard() {
+    this._app.use("/admin/queues", BullBoard.initialize());
   }
 
   get app() {

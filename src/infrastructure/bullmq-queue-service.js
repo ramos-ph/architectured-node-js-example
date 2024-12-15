@@ -9,11 +9,11 @@ class BullMQQueueService {
   }
 
   async enqueue(queueName, jobName, jobData) {
-    const queue = this._getQueue(queueName);
+    const queue = this.getQueue(queueName);
     await queue.add(jobName, jobData);
   }
 
-  _getQueue(name) {
+  getQueue(name) {
     if (!this._queues.has(name)) {
       const queue = new Queue(name, { connection: this._connection });
       this._queues.set(name, queue);
