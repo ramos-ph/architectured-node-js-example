@@ -14,7 +14,15 @@ $ npm install
 $ docker compose up -d
 ```
 
-4. Start the server with
+4. Create a `.env` file based on the example:
+
+```
+$ cp .env.example .env
+```
+
+Get the mail credentials at https://ethereal.email/
+
+5. Start the server with
 
 ```
 $ npm start
