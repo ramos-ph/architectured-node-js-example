@@ -1,8 +1,10 @@
 import { Profile } from "../domain/profile.js";
+import { QUEUE_NAMES } from "../shared/constants.js";
 
 class CreateProfile {
-  constructor({ profileRepository }) {
+  constructor({ profileRepository, queueService }) {
     this._profileRepository = profileRepository;
+    this._queueService = queueService;
   }
 
   async execute({ email, username, password }) {
@@ -17,9 +19,22 @@ class CreateProfile {
 
     await this._profileRepository.create(profile);
 
-    // sendWelcomeMail
+    await this._enqueueWelcomeMail(profile);
 
     return profile;
+  }
+
+  async _enqueueWelcomeMail(profile) {
+    await this._queueService.enqueue(
+      QUEUE_NAMES.SEND_MAIL,
+      `send-mail - ${profile.email}`,
+      {
+        from: "no-reply@nodeapp.com",
+        to: profile.email,
+        subject: "Welcome to Node.js Example!",
+        text: `Hello, ${profile.username}!\n\nYour account was successfully registered!`,
+      }
+    );
   }
 }
 
