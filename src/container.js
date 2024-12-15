@@ -16,6 +16,7 @@ const createProfile = new CreateProfile({ profileRepository });
 const sendMail = new SendMail({ mailerClient: nodemailerMailerService });
 
 const container = {
+  bullMqQueueService: bullMqQueueService,
   profileRepository: profileRepository,
   createProfile: createProfile,
   pbkdf2PasswordHasher: pbkdf2PasswordHasher,

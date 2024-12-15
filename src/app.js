@@ -1,9 +1,9 @@
 import "dotenv/config";
 import express from "express";
-import { Worker } from "bullmq";
 
 import { Router } from "./interface/http/router.js";
 import { container } from "./container.js";
+import { QUEUE_NAMES } from "./shared/constants.js";
 import { EmailWorker } from "./interface/workers/email-worker.js";
 
 class Application {
@@ -27,9 +27,10 @@ class Application {
   }
 
   initializeWorkers() {
-    new Worker("email", EmailWorker.sendWelcomeMail, {
-      connection: { host: "localhost", port: 6379 },
-    });
+    container.bullMqQueueService.addWorker(
+      QUEUE_NAMES.EMAIL,
+      EmailWorker.sendWelcomeMail
+    );
   }
 
   get app() {
