@@ -27,9 +27,9 @@ class Application {
   }
 
   _initializeWorkers() {
-    container.bullMqQueueService.addWorker(
+    container.queueService.addWorker(
       QUEUE_NAMES.SEND_MAIL,
-      EmailWorker.sendWelcomeMail
+      EmailWorker.process
     );
   }
 
