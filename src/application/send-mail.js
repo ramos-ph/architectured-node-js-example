@@ -1,4 +1,4 @@
-import { Mail } from "../domain/mail";
+import { Mail } from "../domain/mail.js";
 
 class SendMail {
   constructor({ mailerService }) {
