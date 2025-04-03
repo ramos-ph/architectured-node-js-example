@@ -17,7 +17,7 @@ class NodemailerMailerService implements MailerService {
     });
   }
 
-  async sendMail(mail: Mail) {
+  async sendMail(mail: Mail.Type) {
     this._transporter.sendMail(mail);
   }
 }

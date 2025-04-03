@@ -3,7 +3,7 @@ import { container } from "../../container.js";
 import { Mail } from "../../domain/mail.js";
 
 class EmailWorker {
-  static async process(job: Job<Mail>) {
+  static async process(job: Job<Mail.Type>) {
     await container.sendMail.execute(job.data);
   }
 }
