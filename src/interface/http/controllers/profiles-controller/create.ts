@@ -12,7 +12,6 @@ const createProfileHandler: RequestHandler = async (req, res) => {
   });
 
   res.status(201).send({ data: ProfileSerializer.serialize(profile) });
-  return;
 };
 
 export { createProfileHandler };
