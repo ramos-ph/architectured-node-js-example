@@ -4,7 +4,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/main/index.ts"
+    "start": "nodemon src/main/index.ts",
+    "types:check": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
