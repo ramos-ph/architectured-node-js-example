@@ -1,29 +1,29 @@
-type CreateProps = {
-  id: string;
-  username: string;
-  email: string;
-  passwordHash: string;
-  salt: string;
-};
+namespace Profile {
+  export type Type = {
+    id: string;
+    username: string;
+    email: string;
+    passwordHash: string;
+    salt: string;
+  };
 
-class Profile {
-  public readonly id: string;
-  public readonly username: string;
-  public readonly email: string;
-  public readonly passwordHash: string;
-  public readonly salt: string;
+  type CreateProps = {
+    id: string;
+    username: string;
+    email: string;
+    passwordHash: string;
+    salt: string;
+  };
 
-  constructor(data: CreateProps) {
-    this.id = data.id;
-    this.username = data.username;
-    this.email = data.email;
-    this.passwordHash = data.passwordHash;
-    this.salt = data.salt;
-  }
-
-  static create(data: CreateProps) {
-    return new Profile(data);
-  }
+  export const create = (data: CreateProps): Type => {
+    return {
+      id: data.id,
+      username: data.username,
+      email: data.email,
+      passwordHash: data.passwordHash,
+      salt: data.salt,
+    };
+  };
 }
 
 export { Profile };

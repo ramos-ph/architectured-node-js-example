@@ -41,7 +41,7 @@ class CreateProfile {
     return profile;
   }
 
-  async _enqueueWelcomeMail(profile: Profile) {
+  async _enqueueWelcomeMail(profile: Profile.Type) {
     await this._queueService.enqueue(
       QUEUE_NAMES.SEND_MAIL,
       `send-mail - ${profile.email}`,
