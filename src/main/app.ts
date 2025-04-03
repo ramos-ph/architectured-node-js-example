@@ -1,4 +1,3 @@
-import "dotenv/config";
 import express from "express";
 
 import { Router } from "../interface/http/router.js";
@@ -8,15 +7,17 @@ import { EmailWorker } from "../interface/workers/email-worker.js";
 import { BullBoard } from "./bull-board.js";
 
 class Application {
+  private _app: express.Application;
+
   constructor() {
     this._app = express();
-    this._initializeMiddlewares();
-    this._initializeRoutes();
-    this._initializeWorkers();
-    this._initializeBullBoard();
+    this.initializeMiddlewares();
+    this.initializeRoutes();
+    this.initializeWorkers();
+    this.initializeBullBoard();
   }
 
-  _initializeMiddlewares() {
+  private initializeMiddlewares() {
     this._app.use(express.json());
     this._app.use((req, _res, next) => {
       req.container = container;
@@ -24,18 +25,18 @@ class Application {
     });
   }
 
-  _initializeRoutes() {
+  private initializeRoutes() {
     this._app.use("/api", Router.initialize());
   }
 
-  _initializeWorkers() {
+  private initializeWorkers() {
     container.queueService.addWorker(
       QUEUE_NAMES.SEND_MAIL,
       EmailWorker.process
     );
   }
 
-  _initializeBullBoard() {
+  private initializeBullBoard() {
     this._app.use("/admin/queues", BullBoard.initialize());
   }
 

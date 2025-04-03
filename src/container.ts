@@ -23,4 +23,6 @@ const container = {
   sendMail: sendMail,
 };
 
-export { container };
+type Container = typeof container;
+
+export { container, type Container };

@@ -1,21 +1,22 @@
 import crypto from "node:crypto";
 
 class PBKDF2PasswordHasher {
-  hash(plainText) {
-    const salt = this._generateSalt();
+  public hash(plainText: string) {
+    const salt = this.generateSalt();
+    // TODO: return string in <salt>.<hash>
     return {
-      hash: this._encryptPassword(plainText, salt),
+      hash: this.encryptPassword(plainText, salt),
       salt: salt,
     };
   }
 
-  _encryptPassword(plainText, salt) {
+  private encryptPassword(plainText: string, salt: string) {
     return crypto
       .pbkdf2Sync(plainText, salt, 100_000, 64, "sha512")
       .toString("hex");
   }
 
-  _generateSalt() {
+  private generateSalt() {
     return crypto.randomBytes(16).toString("base64");
   }
 }

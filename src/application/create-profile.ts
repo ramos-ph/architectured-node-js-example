@@ -1,13 +1,30 @@
 import { Profile } from "../domain/profile.js";
 import { QUEUE_NAMES } from "../shared/constants.js";
 
+type Dependencies = {
+  profileRepository: any;
+  queueService: any;
+};
+
+type Params = {
+  email: string;
+  username: string;
+  password: {
+    hash: string;
+    salt: string;
+  };
+};
+
 class CreateProfile {
-  constructor({ profileRepository, queueService }) {
+  private readonly _profileRepository: any;
+  private readonly _queueService: any;
+
+  constructor({ profileRepository, queueService }: Dependencies) {
     this._profileRepository = profileRepository;
     this._queueService = queueService;
   }
 
-  async execute({ email, username, password }) {
+  async execute({ email, username, password }: Params) {
     const profileId = this._profileRepository.generateNextId();
     const profile = Profile.create({
       id: profileId,
@@ -24,7 +41,7 @@ class CreateProfile {
     return profile;
   }
 
-  async _enqueueWelcomeMail(profile) {
+  async _enqueueWelcomeMail(profile: Profile) {
     await this._queueService.enqueue(
       QUEUE_NAMES.SEND_MAIL,
       `send-mail - ${profile.email}`,

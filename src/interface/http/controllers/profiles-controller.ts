@@ -1,7 +1,8 @@
+import { Request, Response } from "express";
 import { ProfileSerializer } from "../serializers/profile-serializer.js";
 
 class ProfileController {
-  static async create(req, res) {
+  static async create(req: Request, res: Response) {
     const body = req.body;
     const { pbkdf2PasswordHasher, createProfile } = req.container;
 

@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer";
 
 class NodemailerMailerService {
+  private readonly _transporter: nodemailer.Transporter;
+
   constructor() {
     this._transporter = nodemailer.createTransport({
       host: "smtp.ethereal.email",
@@ -13,7 +15,7 @@ class NodemailerMailerService {
     });
   }
 
-  async sendMail(mail) {
+  async sendMail(mail: any) {
     this._transporter.sendMail(mail);
   }
 }
