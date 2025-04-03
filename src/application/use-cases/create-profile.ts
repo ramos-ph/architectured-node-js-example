@@ -1,5 +1,5 @@
-import { Profile } from "../domain/profile.js";
-import { QUEUE_NAMES } from "../shared/constants.js";
+import { Profile } from "../../domain/profile.js";
+import { QUEUE_NAMES } from "../../shared/constants.js";
 
 type Dependencies = {
   profileRepository: any;
