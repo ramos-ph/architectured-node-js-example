@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer";
+import { MailerService } from "../domain/mailerService.js";
+import { Mail } from "../domain/mail.js";
 
-class NodemailerMailerService {
+class NodemailerMailerService implements MailerService {
   private readonly _transporter: nodemailer.Transporter;
 
   constructor() {
@@ -15,7 +17,7 @@ class NodemailerMailerService {
     });
   }
 
-  async sendMail(mail: any) {
+  async sendMail(mail: Mail) {
     this._transporter.sendMail(mail);
   }
 }
