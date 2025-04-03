@@ -1,7 +1,7 @@
 import { ProfileRepositoryInMemory } from "./infrastructure/profile-repository-in-memory.js";
 import { CreateProfile } from "./application/create-profile.js";
 import { PBKDF2PasswordHasher } from "./infrastructure/pbkdf2-password-hasher.js";
-import { NodemailerMailerService } from "./infrastructure/nodemailer-mailer-client.js";
+import { NodemailerMailerService } from "./infrastructure/nodemailer-mailer-service.js";
 import { SendMail } from "./application/send-mail.js";
 import { BullMQQueueService } from "./infrastructure/bullmq-queue-service.js";
 
