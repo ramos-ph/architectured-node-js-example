@@ -10,6 +10,9 @@ const config: { [key: string]: Knex.Config } = {
       password: "docker",
       database: "example_dev",
     },
+    migrations: {
+      directory: "./src/infrastructure/database/migrations",
+    },
   },
 
   test: {
@@ -20,6 +23,9 @@ const config: { [key: string]: Knex.Config } = {
       user: "docker",
       password: "docker",
       database: "example_test",
+    },
+    migrations: {
+      directory: "./src/infrastructure/database/migrations",
     },
   },
 };
