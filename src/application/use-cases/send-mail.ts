@@ -1,4 +1,4 @@
-import { Mail } from "../../domain/mail.js";
+import { Mail } from "../../domain/entities/mail.js";
 
 type Dependencies = {
   mailerService: any;

@@ -1,6 +1,6 @@
 import { Job } from "bullmq";
 import { container } from "../../container.js";
-import { Mail } from "../../domain/mail.js";
+import { Mail } from "../../domain/entities/mail.js";
 
 class EmailWorker {
   static async process(job: Job<Mail.Type>) {

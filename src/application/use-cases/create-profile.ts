@@ -1,4 +1,4 @@
-import { Profile } from "../../domain/profile.js";
+import { Profile } from "../../domain/entities/profile.js";
 import { QUEUE_NAMES } from "../../shared/constants.js";
 
 type Dependencies = {
