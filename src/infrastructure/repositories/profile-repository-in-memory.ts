@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { Profile } from "../domain/entities/profile.js";
+import { Profile } from "../../domain/entities/profile.ts";
 
 class ProfileRepositoryInMemory {
   private readonly _profiles: Profile.Type[];
