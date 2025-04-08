@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/main/index.ts",
-    "types:check": "tsc --noEmit"
+    "types:check": "tsc --noEmit",
+    "db:create": "createdbjs example_dev --user=docker --password=docker",
+    "db:migrate": "knex migrate:latest",
+    "db:create:test": "createdbjs example_test --user=docker --password=docker",
+    "db:migrate:test": "knex migrate:latest --env=test"
   },
   "keywords": [],
   "author": "",
