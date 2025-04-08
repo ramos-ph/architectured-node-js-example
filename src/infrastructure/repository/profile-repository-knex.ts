@@ -1,4 +1,4 @@
-import { ProfileRepository } from "../../domain/profile-repository.ts";
+import { ProfileRepository } from "../../domain/repositories/profile-repository.ts";
 
 const makeProfileRepositoryKnex = (): ProfileRepository => {
   return {
