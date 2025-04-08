@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import { MailerService } from "../domain/mailerService.js";
-import { Mail } from "../domain/mail.js";
+import { Mail } from "../../domain/entities/mail.js";
 
 class NodemailerMailerService implements MailerService {
   private readonly _transporter: nodemailer.Transporter;
