@@ -11,7 +11,7 @@ const config: { [key: string]: Knex.Config } = {
       database: "example_dev",
     },
     migrations: {
-      directory: "./src/infrastructure/database/migrations",
+      directory: "./src/infrastructure/migrations",
     },
   },
 
@@ -25,7 +25,7 @@ const config: { [key: string]: Knex.Config } = {
       database: "example_test",
     },
     migrations: {
-      directory: "./src/infrastructure/database/migrations",
+      directory: "./src/infrastructure/migrations",
     },
   },
 };
