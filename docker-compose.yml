@@ -1,5 +1,19 @@
 services:
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+    ports:
+      - 5432:5432
+    volumes:
+      - database:/data
+
   redis:
     image: redis
     ports:
       - 6379:6379
+
+volumes:
+  database:
+    driver: local
