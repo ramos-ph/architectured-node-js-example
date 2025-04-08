@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { MailerService } from "../domain/mailerService.js";
+import { MailerService } from "../../domain/services/mailer-service.ts";
 import { Mail } from "../../domain/entities/mail.js";
 
 class NodemailerMailerService implements MailerService {
