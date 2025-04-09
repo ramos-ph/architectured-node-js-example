@@ -1,13 +1,14 @@
+import { Knex } from "knex";
 import { ProfileRepository } from "../../domain/repositories/profile-repository.ts";
 
-const makeProfileRepositoryKnex = (): ProfileRepository => {
+const makeProfileRepositoryKnex = (knex: Knex): ProfileRepository => {
   return {
     generateNextId() {
       return crypto.randomUUID();
     },
 
     async create(profile) {
-      throw new Error("Not implemented");
+      await knex("profile").insert(profile);
     },
   };
 };
