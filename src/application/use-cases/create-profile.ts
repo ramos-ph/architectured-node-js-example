@@ -1,8 +1,8 @@
-import { Profile } from "../../domain/entities/profile.js";
+import { Profile } from "../../domain/entities/profile.ts";
 import { ProfileRepository } from "../../domain/repositories/profile-repository.ts";
 import { PasswordEncrypter } from "../../domain/services/password-encrypter.ts";
 import { QueueService } from "../../domain/services/queue-service.ts";
-import { QUEUE_NAMES } from "../../shared/constants.js";
+import { QUEUE_NAMES } from "../../shared/constants.ts";
 
 type Dependencies = {
   profileRepository: ProfileRepository;
@@ -16,39 +16,11 @@ type Params = {
   password: string;
 };
 
-class CreateProfile {
-  private readonly profileRepository: ProfileRepository;
-  private readonly queueService: QueueService;
-  private readonly passwordEncrypter: PasswordEncrypter;
+const makeCreateProfile = (dependencies: Dependencies) => {
+  const { profileRepository, queueService, passwordEncrypter } = dependencies;
 
-  constructor({
-    profileRepository,
-    queueService,
-    passwordEncrypter,
-  }: Dependencies) {
-    this.profileRepository = profileRepository;
-    this.queueService = queueService;
-    this.passwordEncrypter = passwordEncrypter;
-  }
-
-  async execute({ email, username, password }: Params) {
-    const profileId = this.profileRepository.generateNextId();
-    const profile = Profile.create({
-      id: profileId,
-      email,
-      username,
-      passwordHash: this.passwordEncrypter.encrypt(password),
-    });
-
-    await this.profileRepository.create(profile);
-
-    await this.enqueueWelcomeMail(profile);
-
-    return profile;
-  }
-
-  async enqueueWelcomeMail(profile: Profile.Type) {
-    await this.queueService.enqueue(
+  const enqueueWelcomeMail = async (profile: Profile.Type) => {
+    await queueService.enqueue(
       QUEUE_NAMES.SEND_MAIL,
       `send-mail - ${profile.email}`,
       {
@@ -58,7 +30,23 @@ class CreateProfile {
         text: `Hello, ${profile.username}!\n\nYour account was successfully registered!`,
       }
     );
-  }
-}
+  };
 
-export { CreateProfile };
+  return async (params: Params) => {
+    const profileId = profileRepository.generateNextId();
+    const profile = Profile.create({
+      id: profileId,
+      email: params.email,
+      username: params.username,
+      passwordHash: passwordEncrypter.encrypt(params.password),
+    });
+
+    await profileRepository.create(profile);
+
+    await enqueueWelcomeMail(profile);
+
+    return profile;
+  };
+};
+
+export { makeCreateProfile };

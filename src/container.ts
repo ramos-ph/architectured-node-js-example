@@ -1,4 +1,4 @@
-import { CreateProfile } from "./application/use-cases/create-profile.js";
+import { makeCreateProfile } from "./application/use-cases/create-profile.js";
 import { PBKDF2PasswordEncrypter } from "./infrastructure/services/pbkdf2-password-encrypter.ts";
 import { NodemailerMailerService } from "./infrastructure/mailers/nodemailer-mailer-service.js";
 import { SendMail } from "./application/use-cases/send-mail.js";
@@ -16,7 +16,7 @@ const nodemailerMailerService = new NodemailerMailerService();
 const passwordEncrypter = new PBKDF2PasswordEncrypter();
 const profileRepository = makeProfileRepositoryKnex(database.knex);
 
-const createProfile = new CreateProfile({
+const createProfile = makeCreateProfile({
   profileRepository,
   queueService,
   passwordEncrypter,
