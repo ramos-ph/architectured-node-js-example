@@ -8,7 +8,7 @@ const makeProfileRepositoryKnex = (knex: Knex): ProfileRepository => {
     },
 
     async create(profile) {
-      await knex("profile").insert(profile);
+      await knex("profiles").insert(profile);
     },
   };
 };
