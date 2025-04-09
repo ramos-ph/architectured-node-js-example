@@ -1,22 +1,19 @@
 import crypto from "node:crypto";
 import { PasswordEncrypter } from "../../domain/services/password-encrypter.ts";
 
-class PBKDF2PasswordEncrypter implements PasswordEncrypter {
-  public encrypt(password: string): `${string}.${string}` {
-    const salt = this.generateSalt();
-    const hash = this.encryptPassword(password, salt);
-    return `${salt}.${hash}`;
-  }
+const makePBKDF2PasswordEncrypter = (): PasswordEncrypter => {
+  const generateSalt = () => crypto.randomBytes(16).toString("base64");
 
-  private encryptPassword(password: string, salt: string) {
-    return crypto
-      .pbkdf2Sync(password, salt, 100_000, 64, "sha512")
-      .toString("hex");
-  }
+  const encryptPassword = (password: string, salt: string) =>
+    crypto.pbkdf2Sync(password, salt, 100_000, 64, "sha512").toString("hex");
 
-  private generateSalt() {
-    return crypto.randomBytes(16).toString("base64");
-  }
-}
+  return {
+    encrypt(password) {
+      const salt = generateSalt();
+      const hash = encryptPassword(password, salt);
+      return `${salt}.${hash}`;
+    },
+  };
+};
 
-export { PBKDF2PasswordEncrypter };
+export { makePBKDF2PasswordEncrypter };

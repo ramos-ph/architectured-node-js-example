@@ -1,5 +1,5 @@
 import { makeCreateProfile } from "./application/use-cases/create-profile.ts";
-import { PBKDF2PasswordEncrypter } from "./infrastructure/services/pbkdf2-password-encrypter.ts";
+import { makePBKDF2PasswordEncrypter } from "./infrastructure/services/pbkdf2-password-encrypter.ts";
 import { NodemailerMailerService } from "./infrastructure/mailers/nodemailer-mailer-service.ts";
 import { makeSendMail } from "./application/use-cases/send-mail.ts";
 import { BullMQQueueService } from "./infrastructure/bullmq-queue-service.ts";
@@ -13,7 +13,7 @@ const queueService = new BullMQQueueService({
 });
 
 const mailerService = new NodemailerMailerService();
-const passwordEncrypter = new PBKDF2PasswordEncrypter();
+const passwordEncrypter = makePBKDF2PasswordEncrypter();
 const profileRepository = makeProfileRepositoryKnex(database.knex);
 
 const createProfile = makeCreateProfile({
