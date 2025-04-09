@@ -1,10 +1,10 @@
 import { Job } from "bullmq";
-import { container } from "../../container.js";
-import { Mail } from "../../domain/entities/mail.js";
+import { container } from "../../container.ts";
+import { Mail } from "../../domain/entities/mail.ts";
 
 class EmailWorker {
   static async process(job: Job<Mail.Type>) {
-    await container.sendMail.execute(job.data);
+    await container.sendMail(job.data);
   }
 }
 

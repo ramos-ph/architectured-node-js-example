@@ -1,4 +1,4 @@
-import { Mail } from "../../domain/entities/mail.js";
+import { Mail } from "../../domain/entities/mail.ts";
 
 type Dependencies = {
   mailerService: any;
@@ -11,18 +11,19 @@ type Params = {
   text: string;
 };
 
-class SendMail {
-  private readonly _mailerService: any;
+const makeSendMail = (dependencies: Dependencies) => {
+  const { mailerService } = dependencies;
 
-  constructor({ mailerService }: Dependencies) {
-    this._mailerService = mailerService;
-  }
+  return async (params: Params) => {
+    const mail = Mail.create({
+      to: params.to,
+      from: params.from,
+      subject: params.subject,
+      text: params.text,
+    });
 
-  async execute({ to, from, subject, text }: Params) {
-    const mail = Mail.create({ to, from, subject, text });
+    await mailerService.sendMail(mail);
+  };
+};
 
-    await this._mailerService.sendMail(mail);
-  }
-}
-
-export { SendMail };
+export { makeSendMail };
