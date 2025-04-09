@@ -1,6 +1,6 @@
-interface QueueService {
+interface QueueService<TQueue = unknown> {
   enqueue: <T>(queueName: string, jobName: string, jobData: T) => Promise<void>;
-  getQueue: (queueName: string) => unknown;
+  getQueue: (queueName: string) => TQueue;
   addWorker: (queueName: string, handler: any) => void;
 }
 
