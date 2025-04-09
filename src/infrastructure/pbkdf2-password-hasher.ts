@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 
+// TODO: move to create profile use case
 class PBKDF2PasswordHasher {
   public hash(plainText: string) {
     const salt = this.generateSalt();
