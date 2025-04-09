@@ -1,9 +1,10 @@
 import { Profile } from "../../domain/entities/profile.js";
+import { ProfileRepository } from "../../domain/repositories/profile-repository.ts";
 import { PasswordEncrypter } from "../../domain/services/password-encrypter.ts";
 import { QUEUE_NAMES } from "../../shared/constants.js";
 
 type Dependencies = {
-  profileRepository: any;
+  profileRepository: ProfileRepository;
   queueService: any;
   passwordEncrypter: PasswordEncrypter;
 };
@@ -15,8 +16,8 @@ type Params = {
 };
 
 class CreateProfile {
-  private readonly _profileRepository: any;
-  private readonly _queueService: any;
+  private readonly profileRepository: ProfileRepository;
+  private readonly queueService: any;
   private readonly passwordEncrypter: PasswordEncrypter;
 
   constructor({
@@ -24,13 +25,13 @@ class CreateProfile {
     queueService,
     passwordEncrypter,
   }: Dependencies) {
-    this._profileRepository = profileRepository;
-    this._queueService = queueService;
+    this.profileRepository = profileRepository;
+    this.queueService = queueService;
     this.passwordEncrypter = passwordEncrypter;
   }
 
   async execute({ email, username, password }: Params) {
-    const profileId = this._profileRepository.generateNextId();
+    const profileId = this.profileRepository.generateNextId();
     const profile = Profile.create({
       id: profileId,
       email,
@@ -38,15 +39,15 @@ class CreateProfile {
       passwordHash: this.passwordEncrypter.encrypt(password),
     });
 
-    await this._profileRepository.create(profile);
+    await this.profileRepository.create(profile);
 
-    await this._enqueueWelcomeMail(profile);
+    await this.enqueueWelcomeMail(profile);
 
     return profile;
   }
 
-  async _enqueueWelcomeMail(profile: Profile.Type) {
-    await this._queueService.enqueue(
+  async enqueueWelcomeMail(profile: Profile.Type) {
+    await this.queueService.enqueue(
       QUEUE_NAMES.SEND_MAIL,
       `send-mail - ${profile.email}`,
       {
