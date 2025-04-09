@@ -8,7 +8,7 @@ export const makeDatabase = () => {
     knex,
 
     async connect() {
-      await knex("SELECT 1");
+      await knex.raw("SELECT 1");
       console.log("Database connected successfully.");
     },
 
