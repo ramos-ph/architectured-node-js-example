@@ -1,33 +1,41 @@
 import { Profile } from "../../domain/entities/profile.js";
+import { PasswordEncrypter } from "../../domain/services/password-encrypter.ts";
 import { QUEUE_NAMES } from "../../shared/constants.js";
 
 type Dependencies = {
   profileRepository: any;
   queueService: any;
+  passwordEncrypter: PasswordEncrypter;
 };
 
 type Params = {
   email: string;
   username: string;
-  passwordHash: string;
+  password: string;
 };
 
 class CreateProfile {
   private readonly _profileRepository: any;
   private readonly _queueService: any;
+  private readonly passwordEncrypter: PasswordEncrypter;
 
-  constructor({ profileRepository, queueService }: Dependencies) {
+  constructor({
+    profileRepository,
+    queueService,
+    passwordEncrypter,
+  }: Dependencies) {
     this._profileRepository = profileRepository;
     this._queueService = queueService;
+    this.passwordEncrypter = passwordEncrypter;
   }
 
-  async execute({ email, username, passwordHash }: Params) {
+  async execute({ email, username, password }: Params) {
     const profileId = this._profileRepository.generateNextId();
     const profile = Profile.create({
       id: profileId,
       email,
       username,
-      passwordHash,
+      passwordHash: this.passwordEncrypter.encrypt(password),
     });
 
     await this._profileRepository.create(profile);
