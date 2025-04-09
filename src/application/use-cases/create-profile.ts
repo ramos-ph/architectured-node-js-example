@@ -1,11 +1,12 @@
 import { Profile } from "../../domain/entities/profile.js";
 import { ProfileRepository } from "../../domain/repositories/profile-repository.ts";
 import { PasswordEncrypter } from "../../domain/services/password-encrypter.ts";
+import { QueueService } from "../../domain/services/queue-service.ts";
 import { QUEUE_NAMES } from "../../shared/constants.js";
 
 type Dependencies = {
   profileRepository: ProfileRepository;
-  queueService: any;
+  queueService: QueueService;
   passwordEncrypter: PasswordEncrypter;
 };
 
@@ -17,7 +18,7 @@ type Params = {
 
 class CreateProfile {
   private readonly profileRepository: ProfileRepository;
-  private readonly queueService: any;
+  private readonly queueService: QueueService;
   private readonly passwordEncrypter: PasswordEncrypter;
 
   constructor({

@@ -1,8 +1,9 @@
 import { Queue, Worker } from "bullmq";
+import { QueueService } from "../domain/services/queue-service.ts";
 
-class BullMQQueueService {
+class BullMQQueueService implements QueueService {
   private readonly _connection: { host: string; port: number };
-  _queues = new Map();
+  _queues = new Map<string, Queue>();
   _workers = new Map();
 
   constructor({ connection }: { connection: { host: string; port: number } }) {
@@ -14,12 +15,12 @@ class BullMQQueueService {
     await queue.add(jobName, jobData);
   }
 
-  getQueue(name: string) {
+  getQueue(name: string): Queue {
     if (!this._queues.has(name)) {
       const queue = new Queue(name, { connection: this._connection });
       this._queues.set(name, queue);
     }
-    return this._queues.get(name);
+    return this._queues.get(name)!;
   }
 
   addWorker(queueName: string, handler: any) {
