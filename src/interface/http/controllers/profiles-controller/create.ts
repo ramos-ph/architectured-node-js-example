@@ -8,7 +8,7 @@ const createProfileHandler: RequestHandler = async (req, res) => {
   const profile = await createProfile.execute({
     email: body.email,
     username: body.username,
-    password: pbkdf2PasswordHasher.hash(body.password),
+    passwordHash: pbkdf2PasswordHasher.hash(body.password),
   });
 
   res.status(201).send({ data: ProfileSerializer.serialize(profile) });

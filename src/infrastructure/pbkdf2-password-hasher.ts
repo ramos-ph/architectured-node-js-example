@@ -3,11 +3,8 @@ import crypto from "node:crypto";
 class PBKDF2PasswordHasher {
   public hash(plainText: string) {
     const salt = this.generateSalt();
-    // TODO: return string in <salt>.<hash>
-    return {
-      hash: this.encryptPassword(plainText, salt),
-      salt: salt,
-    };
+    const hash = this.encryptPassword(plainText, salt);
+    return `${salt}.${hash}`;
   }
 
   private encryptPassword(plainText: string, salt: string) {

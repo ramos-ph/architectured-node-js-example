@@ -9,10 +9,7 @@ type Dependencies = {
 type Params = {
   email: string;
   username: string;
-  password: {
-    hash: string;
-    salt: string;
-  };
+  passwordHash: string;
 };
 
 class CreateProfile {
@@ -24,14 +21,13 @@ class CreateProfile {
     this._queueService = queueService;
   }
 
-  async execute({ email, username, password }: Params) {
+  async execute({ email, username, passwordHash }: Params) {
     const profileId = this._profileRepository.generateNextId();
     const profile = Profile.create({
       id: profileId,
       email,
       username,
-      passwordHash: password.hash,
-      salt: password.salt,
+      passwordHash,
     });
 
     await this._profileRepository.create(profile);
