@@ -1,10 +1,10 @@
 import express from "express";
 
-import { Router } from "../interface/http/router.js";
-import { container } from "../container.js";
-import { QUEUE_NAMES } from "../shared/constants.js";
-import { EmailWorker } from "../interface/workers/email-worker.js";
-import { BullBoard } from "./bull-board.js";
+import { Router } from "../interface/http/router.ts";
+import { container } from "../container.ts";
+import { QUEUE_NAMES } from "../shared/constants.ts";
+import { EmailWorker } from "../interface/workers/email-worker.ts";
+import { BullBoard } from "./bull-board.ts";
 
 class Application {
   private _app: express.Application;

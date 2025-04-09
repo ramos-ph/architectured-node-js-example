@@ -12,7 +12,6 @@ const makeBullMQQueueService = ({
   return {
     async enqueue<T>(queueName: string, jobName: string, jobData: T) {
       const queue = this.getQueue(queueName);
-      // 'queue' is of type 'unknown'.
       await queue.add(jobName, jobData);
     },
 

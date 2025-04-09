@@ -1,4 +1,4 @@
-import { Profile } from "../../../domain/entities/profile.js";
+import { Profile } from "../../../domain/entities/profile.ts";
 
 class ProfileSerializer {
   static serialize(profile: Profile.Type) {

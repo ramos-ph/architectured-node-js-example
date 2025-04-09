@@ -1,1 +1,1 @@
-export { createProfileHandler as create } from "./create.js";
+export { createProfileHandler as create } from "./create.ts";

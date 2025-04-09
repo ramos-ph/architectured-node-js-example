@@ -1,6 +1,6 @@
 import express from "express";
 
-import { ProfileRouter } from "./routes/profile-router.js";
+import { ProfileRouter } from "./routes/profile-router.ts";
 
 class Router {
   static initialize() {

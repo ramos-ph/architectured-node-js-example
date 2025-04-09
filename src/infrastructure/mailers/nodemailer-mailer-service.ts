@@ -1,6 +1,5 @@
 import nodemailer from "nodemailer";
 import { MailerService } from "../../domain/services/mailer-service.ts";
-import { Mail } from "../../domain/entities/mail.js";
 
 const makeNodemailerMailerService = (): MailerService => {
   const transporter = nodemailer.createTransport({

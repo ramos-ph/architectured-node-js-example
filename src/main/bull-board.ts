@@ -2,8 +2,8 @@ import { ExpressAdapter } from "@bull-board/express";
 import { createBullBoard } from "@bull-board/api";
 import { BullMQAdapter } from "@bull-board/api/bullMQAdapter.js";
 
-import { container } from "../container.js";
-import { QUEUE_NAMES } from "../shared/constants.js";
+import { container } from "../container.ts";
+import { QUEUE_NAMES } from "../shared/constants.ts";
 
 class BullBoard {
   static initialize() {

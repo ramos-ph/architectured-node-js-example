@@ -1,4 +1,4 @@
-import { Profile } from "./profile.ts";
+import { Profile } from "../entities/profile.ts";
 
 interface ProfileRepository {
   generateNextId: () => string;

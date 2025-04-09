@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { app } from "./app.js";
+import { app } from "./app.ts";
 import { container } from "../container.ts";
 
 const main = async () => {
