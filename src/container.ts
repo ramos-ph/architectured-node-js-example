@@ -4,12 +4,14 @@ import { makeNodemailerMailerService } from "./infrastructure/mailers/nodemailer
 import { makeBullMQQueueService } from "./infrastructure/services/bullmq-queue-service.ts";
 import { makeDatabase } from "./infrastructure/database/database.ts";
 import { makeProfileRepositoryKnex } from "./infrastructure/repositories/profile-repository-knex.ts";
+import { makeBullMQEmailQueue } from "./infrastructure/services/bullmq-email-queue.ts";
 
 const database = makeDatabase();
 
 const queueService = makeBullMQQueueService({
   connection: { host: "localhost", port: 6379 },
 });
+const emailQueue = makeBullMQEmailQueue({ queueService });
 
 const mailerService = makeNodemailerMailerService();
 const passwordEncrypter = makePBKDF2PasswordEncrypter();
@@ -17,7 +19,7 @@ const profileRepository = makeProfileRepositoryKnex(database.knex);
 
 const createProfile = makeCreateProfile({
   profileRepository,
-  queueService,
+  emailQueue,
   passwordEncrypter,
 });
 
@@ -28,6 +30,7 @@ const container = {
   createProfile: createProfile,
   passwordEncrypter: passwordEncrypter,
   mailerService: mailerService,
+  emailQueue: emailQueue,
 };
 
 type Container = typeof container;

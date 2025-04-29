@@ -1,12 +1,13 @@
 import { Profile } from "../../domain/entities/profile.ts";
 import { ProfileRepository } from "../../domain/repositories/profile-repository.ts";
+import { EmailQueue } from "../../domain/services/email-queue.ts";
 import { PasswordEncrypter } from "../../domain/services/password-encrypter.ts";
 import { QueueService } from "../../domain/services/queue-service.ts";
 import { QUEUE_NAMES } from "../../shared/constants.ts";
 
 type Dependencies = {
   profileRepository: ProfileRepository;
-  queueService: QueueService;
+  emailQueue: EmailQueue;
   passwordEncrypter: PasswordEncrypter;
 };
 
@@ -17,7 +18,7 @@ type Params = {
 };
 
 const makeCreateProfile = (dependencies: Dependencies) => {
-  const { profileRepository, queueService, passwordEncrypter } = dependencies;
+  const { profileRepository, emailQueue, passwordEncrypter } = dependencies;
 
   return async (params: Params) => {
     const profileId = profileRepository.generateNextId();
@@ -30,23 +31,10 @@ const makeCreateProfile = (dependencies: Dependencies) => {
 
     await profileRepository.create(profile);
 
-    await enqueueWelcomeMail(profile, queueService);
+    await emailQueue.sendWelcomeMail(profile);
 
     return profile;
   };
-};
-
-const enqueueWelcomeMail = async (profile: Profile.Type, queueService: QueueService) => {
-  await queueService.enqueue(
-    QUEUE_NAMES.SEND_MAIL,
-    `send-mail - ${profile.email}`,
-    {
-      from: "no-reply@nodeapp.com",
-      to: profile.email,
-      subject: "Welcome to Node.js Example!",
-      text: `Hello, ${profile.username}!\n\nYour account was successfully registered!`,
-    }
-  );
 };
 
 export { makeCreateProfile };
