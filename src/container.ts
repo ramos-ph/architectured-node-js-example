@@ -1,5 +1,4 @@
 import { makeCreateProfile } from "./application/use-cases/create-profile.ts";
-import { makeSendMail } from "./application/use-cases/send-mail.ts";
 import { makePBKDF2PasswordEncrypter } from "./infrastructure/services/pbkdf2-password-encrypter.ts";
 import { makeNodemailerMailerService } from "./infrastructure/mailers/nodemailer-mailer-service.ts";
 import { makeBullMQQueueService } from "./infrastructure/services/bullmq-queue-service.ts";
@@ -22,15 +21,13 @@ const createProfile = makeCreateProfile({
   passwordEncrypter,
 });
 
-const sendMail = makeSendMail({ mailerService });
-
 const container = {
   database: database,
   queueService: queueService,
   profileRepository: profileRepository,
   createProfile: createProfile,
   passwordEncrypter: passwordEncrypter,
-  sendMail: sendMail,
+  mailerService: mailerService,
 };
 
 type Container = typeof container;
