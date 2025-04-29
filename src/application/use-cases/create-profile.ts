@@ -19,19 +19,6 @@ type Params = {
 const makeCreateProfile = (dependencies: Dependencies) => {
   const { profileRepository, queueService, passwordEncrypter } = dependencies;
 
-  const enqueueWelcomeMail = async (profile: Profile.Type) => {
-    await queueService.enqueue(
-      QUEUE_NAMES.SEND_MAIL,
-      `send-mail - ${profile.email}`,
-      {
-        from: "no-reply@nodeapp.com",
-        to: profile.email,
-        subject: "Welcome to Node.js Example!",
-        text: `Hello, ${profile.username}!\n\nYour account was successfully registered!`,
-      }
-    );
-  };
-
   return async (params: Params) => {
     const profileId = profileRepository.generateNextId();
     const profile = Profile.create({
@@ -43,10 +30,23 @@ const makeCreateProfile = (dependencies: Dependencies) => {
 
     await profileRepository.create(profile);
 
-    await enqueueWelcomeMail(profile);
+    await enqueueWelcomeMail(profile, queueService);
 
     return profile;
   };
+};
+
+const enqueueWelcomeMail = async (profile: Profile.Type, queueService: QueueService) => {
+  await queueService.enqueue(
+    QUEUE_NAMES.SEND_MAIL,
+    `send-mail - ${profile.email}`,
+    {
+      from: "no-reply@nodeapp.com",
+      to: profile.email,
+      subject: "Welcome to Node.js Example!",
+      text: `Hello, ${profile.username}!\n\nYour account was successfully registered!`,
+    }
+  );
 };
 
 export { makeCreateProfile };
