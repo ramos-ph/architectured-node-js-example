@@ -2,8 +2,6 @@ import { Profile } from "../../domain/entities/profile.ts";
 import { ProfileRepository } from "../../domain/repositories/profile-repository.ts";
 import { EmailQueue } from "../../domain/services/email-queue.ts";
 import { PasswordEncrypter } from "../../domain/services/password-encrypter.ts";
-import { QueueService } from "../../domain/services/queue-service.ts";
-import { QUEUE_NAMES } from "../../shared/constants.ts";
 
 type Dependencies = {
   profileRepository: ProfileRepository;
