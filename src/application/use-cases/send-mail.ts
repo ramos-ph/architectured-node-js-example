@@ -1,7 +1,7 @@
-import { Mail } from "../../domain/entities/mail.ts";
+import { MailerService } from "../../domain/services/mailer-service.ts";
 
 type Dependencies = {
-  mailerService: any;
+  mailerService: MailerService;
 };
 
 type Params = {
@@ -15,14 +15,12 @@ const makeSendMail = (dependencies: Dependencies) => {
   const { mailerService } = dependencies;
 
   return async (params: Params) => {
-    const mail = Mail.create({
+    await mailerService.sendMail({
       to: params.to,
       from: params.from,
       subject: params.subject,
       text: params.text,
     });
-
-    await mailerService.sendMail(mail);
   };
 };
 

@@ -1,7 +1,10 @@
-import { Mail } from "../entities/mail.ts";
-
 interface MailerService {
-  sendMail(mail: Mail.Type): Promise<void>;
+  sendMail(mail: {
+    to: string;
+    from: string;
+    subject: string;
+    text: string;
+  }): Promise<void>;
 }
 
 export { MailerService };
